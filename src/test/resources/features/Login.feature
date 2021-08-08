@@ -1,5 +1,6 @@
 Feature: Login Page
 
+  @smoke
   Scenario: User is able to login with valid credentials
 
       Given user enters valid username in the email field
@@ -7,6 +8,7 @@ Feature: Login Page
       When user clicks on the login button
       Then user is logged in successfully
 
+  @smoke @regression
   Scenario Outline: User is not able to login with invalid credentials
 
       Given user enters invalid <email> in the email field

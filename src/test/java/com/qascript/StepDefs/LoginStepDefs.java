@@ -52,4 +52,14 @@ public class LoginStepDefs extends BaseClass {
     public void errorMessageIsDisplayed(String message) {
         LoginPage.validateInvalidLogin(message);
     }
+
+    @Given("User is logged into the application")
+    public void userIsLoggedIntoTheApplication() {
+       userEntersValidUsernameInTheEmailField();
+       userEntersValidPasswordInThePasswordField();
+       userClicksOnTheLoginButton();
+       userIsLoggedInSuccessfully();
+    }
+
+
 }

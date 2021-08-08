@@ -1,9 +1,11 @@
 package com.qascript.Utils;
 
 import com.qascript.BaseClass;
+import io.cucumber.java.en_old.Ac;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -15,6 +17,14 @@ public class BrowserUtils extends BaseClass {
 
     public static void clickElement(String element){
         findAndWaitForElement(element).click();
+    }
+
+    public static void hoverAndClickOnElement(String element1,String element2){
+        WebElement e1 = findAndWaitForElement(element1);
+        WebElement e2 = findAndWaitForElement(element2);
+
+        Actions actions = new Actions(driver);
+        actions.moveToElement(e1).click(e2).build().perform();
     }
 
     public static void enterText(String element,String text){
@@ -42,5 +52,12 @@ public class BrowserUtils extends BaseClass {
         Assert.assertTrue("Expected Text: " + expectedText + " is not matching with Actual Text: " + actualText,
                 expectedText.equals(actualText));
 
+    }
+
+    public static void validateValue(String element,String expectedValue,String attributeType){
+
+        String actualValue = findAndWaitForElement(element).getAttribute(attributeType);
+        Assert.assertTrue("Expected Value: " + expectedValue + " is not matching with Actual Value: " + actualValue,
+                expectedValue.equals(actualValue));
     }
 }
