@@ -1,6 +1,7 @@
 package com.qascript.Utils;
 
 import com.qascript.BaseClass;
+import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -34,4 +35,12 @@ public class BrowserUtils extends BaseClass {
         return element;
     }
 
+
+    public static void validateText(String element,String expectedText) {
+
+        String actualText = findAndWaitForElement(element).getText();
+        Assert.assertTrue("Expected Text: " + expectedText + " is not matching with Actual Text: " + actualText,
+                expectedText.equals(actualText));
+
+    }
 }

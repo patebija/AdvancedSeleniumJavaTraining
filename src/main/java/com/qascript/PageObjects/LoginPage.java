@@ -10,6 +10,7 @@ public class LoginPage extends BaseClass {
     private static String txtPassword = "//input[@id='input-password']";
     private static String btnLogin = "//input[@value='Login']";
     private static String linkForgottenPassword = "(//a[text()='Forgotten Password'])[1]";
+    private static String alertLoginError = "//div[contains(@class,'alert-danger')]";
 
     public static void enterUsername(String email){
         BrowserUtils.enterText(txtEmail,email);
@@ -27,4 +28,7 @@ public class LoginPage extends BaseClass {
         driver.findElement(By.xpath(linkForgottenPassword)).click();
     }
 
+    public static void validateInvalidLogin(String expectedMessage) {
+        BrowserUtils.validateText(alertLoginError,expectedMessage);
+    }
 }

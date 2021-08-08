@@ -1,6 +1,7 @@
 package com.qascript.StepDefs;
 
 import com.qascript.BaseClass;
+import com.qascript.PageObjects.HomePage;
 import com.qascript.PageObjects.LoginPage;
 import com.qascript.Utils.PropertiesUtil;
 import io.cucumber.java.en.And;
@@ -34,17 +35,21 @@ public class LoginStepDefs extends BaseClass {
 
     @Then("user is logged in successfully")
     public void userIsLoggedInSuccessfully() {
+        HomePage.validateLogin("My Account");
     }
 
-    @Given("user enters invalid username in the email field")
-    public void userEntersInvalidUsernameInTheEmailField() {
+    @Given("^user enters invalid (.*) in the email field$")
+    public void userEntersInvalidUsernameInTheEmailField(String email) {
+        LoginPage.enterUsername(email);
     }
 
-    @And("user enters invalid password in the password field")
-    public void userEntersInvalidPasswordInThePasswordField() {
+    @And("^user enters invalid (.*) in the password field$")
+    public void userEntersInvalidPasswordInThePasswordField(String password) {
+        LoginPage.enterPassword(password);
     }
 
-    @Then("error message is displayed")
-    public void errorMessageIsDisplayed() {
+    @Then("^error (.*) is displayed$")
+    public void errorMessageIsDisplayed(String message) {
+        LoginPage.validateInvalidLogin(message);
     }
 }
