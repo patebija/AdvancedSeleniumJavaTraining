@@ -4,7 +4,9 @@ import com.qascript.Utils.BrowserUtils;
 
 public class ProductsPage {
 
-    private static String linkMacbook = "//a[text()='MacBook']";
+    private static String linkMacbook = "//h4/a[contains(@href,'product_id=43')]";
+    private static String linkHPLaptop = "//h4/a[contains(@href,'product_id=47')]";
+    private static String linkProduct = "//h4/a[contains(@href,'product_id')]";
     private static String btnAddToCart = "//button[@id='button-cart']";
     private static String txtPriceHeading = "(//div[@id='product']//ancestor::div)[5]//ul[2]/li/h2";
     private static String txtProductHeading = "(//div[@id='product']//ancestor::div)[5]//h1";
@@ -12,6 +14,10 @@ public class ProductsPage {
 
     public static void clickProduct(){
         BrowserUtils.clickElement(linkMacbook);
+    }
+
+    public static void clickHPLaptop(){
+        BrowserUtils.clickElement(linkHPLaptop);
     }
 
     public static void validatePrice(String expectedPrice){
@@ -29,4 +35,6 @@ public class ProductsPage {
     public static void enterQuantity(String quantity) {
         BrowserUtils.enterText(txtboxQuantity,quantity);
     }
+
+
 }

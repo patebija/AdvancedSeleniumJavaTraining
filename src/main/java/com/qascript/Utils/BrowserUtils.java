@@ -1,7 +1,6 @@
 package com.qascript.Utils;
 
 import com.qascript.BaseClass;
-import io.cucumber.java.en_old.Ac;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -20,8 +19,8 @@ public class BrowserUtils extends BaseClass {
     }
 
     public static void hoverAndClickOnElement(String element1,String element2){
-        WebElement e1 = findAndWaitForElement(element1);
-        WebElement e2 = findAndWaitForElement(element2);
+        WebElement e1 = driver.findElement(By.xpath(element1));
+        WebElement e2 = driver.findElement(By.xpath(element2));
 
         Actions actions = new Actions(driver);
         actions.moveToElement(e1).click(e2).build().perform();
@@ -34,14 +33,8 @@ public class BrowserUtils extends BaseClass {
 
     public static WebElement findAndWaitForElement(String xpath){
         String timeout = properties.getProperty("timeout.maximum");
-        WebElement element = null;
-        try {
-            WebDriverWait wait = new WebDriverWait(driver, Long.parseLong(timeout));
-            element = wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath(xpath))));
-        }
-        catch (Exception e){
-            System.out.println("Element not found");
-        }
+        WebDriverWait wait = new WebDriverWait(driver, Long.parseLong(timeout));
+        WebElement element = wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath(xpath))));
         return element;
     }
 
@@ -52,6 +45,11 @@ public class BrowserUtils extends BaseClass {
         Assert.assertTrue("Expected Text: " + expectedText + " is not matching with Actual Text: " + actualText,
                 expectedText.equals(actualText));
 
+    }
+
+    public static void validateActualText(String expectedText, String actualText){
+        Assert.assertTrue("Expected Text: " + expectedText + " is not matching with Actual Text: " + actualText,
+                expectedText.equals(actualText));
     }
 
     public static void validateValue(String element,String expectedValue,String attributeType){

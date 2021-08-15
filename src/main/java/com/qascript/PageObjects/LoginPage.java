@@ -2,7 +2,10 @@ package com.qascript.PageObjects;
 
 import com.qascript.BaseClass;
 import com.qascript.Utils.BrowserUtils;
+import com.qascript.Utils.ExcelUtils;
 import org.openqa.selenium.By;
+
+import java.util.List;
 
 public class LoginPage extends BaseClass {
 
@@ -12,7 +15,12 @@ public class LoginPage extends BaseClass {
     private static String linkForgottenPassword = "(//a[text()='Forgotten Password'])[1]";
     private static String alertLoginError = "//div[contains(@class,'alert-danger')]";
 
+    static ExcelUtils excelUtils = new ExcelUtils("src/test/resources/testData/Sample.xlsx");
+
     public static void enterUsername(String email){
+        List<String> usernames = excelUtils.readExcelData("Login","Username");
+        String username = usernames.get(0);
+        System.out.println(usernames.get(0));
         BrowserUtils.enterText(txtEmail,email);
     }
 
@@ -30,5 +38,13 @@ public class LoginPage extends BaseClass {
 
     public static void validateInvalidLogin(String expectedMessage) {
         BrowserUtils.validateText(alertLoginError,expectedMessage);
+    }
+
+    public static void getUsername(){
+
+    }
+
+    public static void getPassword(){
+        List<String> passwords = excelUtils.readExcelData("Login","Password");
     }
 }

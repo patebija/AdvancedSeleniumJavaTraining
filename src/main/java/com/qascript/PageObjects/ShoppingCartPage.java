@@ -1,8 +1,13 @@
 package com.qascript.PageObjects;
 
+import com.qascript.BaseClass;
 import com.qascript.Utils.BrowserUtils;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 
-public class ShoppingCartPage {
+import java.util.List;
+
+public class ShoppingCartPage extends BaseClass {
 
     private static String btnCheckout = "//a[text()='Checkout']";
     private static String btnContinueShopping = "//a[text()='Continue Shopping']";
@@ -10,6 +15,8 @@ public class ShoppingCartPage {
     private static String txtboxQuantity = "(//div[@id='content']//table)[1]//tbody//tr[1]/td[4]//input";
     private static String txtPrice = "(//div[@id='content']//table)[1]//tbody//tr[1]/td[5]";
     private static String txtTotalPrice = "(//div[@id='content']//table)[1]//tbody//tr[1]/td[6]";
+    private static String btnRemove = "//button[@title='Remove']";
+    private static String btnItems = "//div[@id='cart']/button";
 
     public static void clickCheckout(){
         BrowserUtils.clickElement(btnCheckout);
@@ -32,8 +39,23 @@ public class ShoppingCartPage {
     }
 
     public static void validateProductTotalPrice(String expectedProductPrice,String quantity){
-        int totalProductPrice = Integer.parseInt(expectedProductPrice) * Integer.parseInt(quantity);
-        BrowserUtils.validateText(txtTotalPrice,String.valueOf(totalProductPrice));
+        Double totalProductPrice = Double.parseDouble(expectedProductPrice) * Double.parseDouble(quantity);
+        String expectedPrice = "$" + String.format("%.2f",totalProductPrice);
+        String actualPrice = driver.findElement(By.xpath(txtTotalPrice)).getText().replaceAll(",","");
+        System.out.println("Total Expected Price: " + expectedPrice);
+        System.out.println("Total Actual Price: " + actualPrice);
+        BrowserUtils.validateActualText(expectedPrice,actualPrice);
+    }
+
+    public static void clearShoppingCart(){
+        List<WebElement> removeElements = driver.findElements(By.xpath(btnRemove));
+        if(removeElements.size()>0){
+            for(WebElement element: removeElements){
+                BrowserUtils.clickElement(btnItems);
+                element.click();
+            }
+        }
+
     }
 
 }
